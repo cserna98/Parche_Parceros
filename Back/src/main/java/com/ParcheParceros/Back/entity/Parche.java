@@ -29,12 +29,15 @@ public class Parche {
     @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 
+    @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Asistente> asistentes = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(
             name = "parche_asistente",
             joinColumns = @JoinColumn(name = "parche_id"),
             inverseJoinColumns = @JoinColumn(name = "asistente_id")
     )
-    private List<Asistente> asistentes;
+    private List<Usuario> usuarios;
 
 }

@@ -21,13 +21,15 @@ public class Item {
 
     private Double valor;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_gasto_id")
-    private TipoGasto tipoGasto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parche_id")
     private Parche parche;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asistente_id")
+    private Asistente asistente;
+
 
     // Constructor omitido
 }
