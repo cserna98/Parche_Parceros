@@ -20,11 +20,11 @@ public class Parche {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    private String titulo;
 
     private LocalDate fecha;
 
-    private Point2D ubicacion;
+    private String ubicacion;
 
     @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();

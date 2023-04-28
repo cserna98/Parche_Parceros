@@ -23,6 +23,10 @@ import java.util.List;
 
         private String nombre;
 
+        private String Email;
+
+        private String Password;
+
         @ManyToMany(mappedBy = "usuarios")
         private List<Parche> parches;
     }

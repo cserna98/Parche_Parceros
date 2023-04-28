@@ -11,6 +11,7 @@ import java.util.List;
 
 
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,5 +25,6 @@ public class Asistente extends Usuario {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "parche_id")
     private Parche parche;
+
 
 }

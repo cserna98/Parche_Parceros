@@ -31,7 +31,7 @@ public class ItemService {
 
     public Item updateItem(Long itemId, Item itemDetails) {
         Item item = getItemById(itemId);
-        item.setNombre(itemDetails.getNombre());
+        item.setTitulo(itemDetails.getTitulo());
         item.setValor(itemDetails.getValor());
         item.setAsistente(itemDetails.getAsistente());
         item.setParche(itemDetails.getParche());

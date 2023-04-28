@@ -1,6 +1,7 @@
 package com.ParcheParceros.Back.service;
 
 import com.ParcheParceros.Back.entity.Asistente;
+import com.ParcheParceros.Back.entity.Item;
 import com.ParcheParceros.Back.repository.AsistenteRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,11 @@ public class AsistenteService {
 
     public void eliminarAsistente(Asistente asistente) {
         asistenteRepository.delete(asistente);
+    }
+
+    public Double CalcularGasto (Asistente asistente) {
+        Double SumaItems = asistente.getItems().stream().mapToDouble(Item::getValor).sum();
+        return SumaItems;
     }
 
 }
