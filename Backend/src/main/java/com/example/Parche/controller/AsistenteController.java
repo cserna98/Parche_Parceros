@@ -1,21 +1,26 @@
 package com.example.Parche.controller;
 
+import com.example.Parche.DTO.AsistenteDTO;
 import com.example.Parche.entity.Asistente;
 import com.example.Parche.service.AsistenteService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/asistentes")
 public class AsistenteController {
 
     private final AsistenteService asistenteService;
+    private final ModelMapper modelMapper;
 
-    public AsistenteController(AsistenteService asistenteService) {
+    public AsistenteController(AsistenteService asistenteService, ModelMapper modelMapper) {
         this.asistenteService = asistenteService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -31,7 +36,8 @@ public class AsistenteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Asistente createAsistente(@RequestBody Asistente asistente) {
+    public Asistente createAsistente(@RequestBody AsistenteDTO asistenteDTO) {
+        Asistente asistente = modelMapper.map(asistenteDTO, Asistente.class);
         return asistenteService.createAsistente(asistente);
     }
 

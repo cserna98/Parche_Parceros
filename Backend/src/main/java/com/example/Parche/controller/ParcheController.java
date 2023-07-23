@@ -1,10 +1,17 @@
 package com.example.Parche.controller;
+import com.example.Parche.DTO.ParcheDTO;
+import com.example.Parche.entity.Asistente;
+import com.example.Parche.entity.Item;
 import com.example.Parche.entity.Parche;
+import com.example.Parche.service.AsistenteService;
+import com.example.Parche.service.ItemService;
 import com.example.Parche.service.ParcheService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -12,9 +19,15 @@ import java.util.List;
 public class ParcheController {
 
     private final ParcheService parcheService;
+    private final ItemService itemService;
+    private final AsistenteService asistenteService;
+    private final ModelMapper modelMapper;
 
-    public ParcheController(ParcheService parcheService) {
+    public ParcheController(ParcheService parcheService, ItemService itemService, AsistenteService asistenteService, ModelMapper modelMapper) {
         this.parcheService = parcheService;
+        this.itemService = itemService;
+        this.asistenteService = asistenteService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -30,14 +43,59 @@ public class ParcheController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Parche createParche(@RequestBody Parche parche) {
-        return parcheService.createParche(parche);
+    public ResponseEntity<Parche> createParche(@RequestBody ParcheDTO parcheDTO) {
+        Parche parche = modelMapper.map(parcheDTO, Parche.class);
+        // Convertir los nombres de asistentes en objetos Asistente y agregarlos al parche
+        List<Asistente> asistentes = new ArrayList<>();
+        for (String nombreAsistente : parcheDTO.getNombresAsistentes()) {
+            Asistente asistente = asistenteService.findByName(nombreAsistente);
+            if (asistente != null) {
+                asistentes.add(asistente);
+            }
+        }
+        parche.setAsistente(asistentes);
+
+        // Convertir los nombres de items en objetos Item y agregarlos al parche
+        List<Item> items = new ArrayList<>();
+        for (String nombreItem : parcheDTO.getNombresItems()) {
+            Item item = itemService.findByName(nombreItem);
+            if (item != null) {
+                items.add(item);
+            }
+        }
+        parche.setItems(items);
+
+        Parche createdParche = parcheService.createParche(parche);
+        return ResponseEntity.ok(createdParche);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<Parche> updateParche(@PathVariable Long id, @RequestBody Parche parcheDetails) {
-        Parche updatedParche = parcheService.updateParche(id, parcheDetails);
-        return ResponseEntity.ok(updatedParche);
+    public ResponseEntity<Parche> updateParche(@PathVariable Long id, @RequestBody ParcheDTO parcheDTODetails) {
+        Parche parche = modelMapper.map(parcheDTODetails, Parche.class);
+        // Convertir los nombres de asistentes en objetos Asistente y agregarlos al parche
+        List<Asistente> asistentes = new ArrayList<>();
+        for (String nombreAsistente : parcheDTODetails.getNombresAsistentes()) {
+            Asistente asistente = asistenteService.findByName(nombreAsistente);
+            if (asistente != null) {
+                asistentes.add(asistente);
+            }
+        }
+        parche.setAsistente(asistentes);
+
+        // Convertir los nombres de items en objetos Item y agregarlos al parche
+        List<Item> items = new ArrayList<>();
+        for (String nombreItem : parcheDTODetails.getNombresItems()) {
+            Item item = itemService.findByName(nombreItem);
+            if (item != null) {
+                items.add(item);
+            }
+        }
+        parche.setItems(items);
+
+        Parche updateParche = parcheService.updateParche(id,parche);
+        return ResponseEntity.ok(updateParche);
+
     }
 
     @DeleteMapping("/{id}")

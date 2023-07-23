@@ -4,7 +4,9 @@ import com.example.Parche.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    // Puedes agregar consultas personalizadas aquí si es necesario
+    Optional<Item> findByName(String nombre);
 }

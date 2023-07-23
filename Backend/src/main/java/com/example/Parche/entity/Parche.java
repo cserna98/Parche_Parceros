@@ -20,13 +20,13 @@ public class Parche {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    private String name;
 
     private String fecha;
 
     private Integer dias;
 
-    private Double gastoTotal;
+    private Double GastoTotal;
 
     @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

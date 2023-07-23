@@ -4,7 +4,9 @@ import com.example.Parche.entity.Parche;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ParcheRepository extends JpaRepository<Parche, Long> {
-    // Puedes agregar consultas personalizadas aquí si es necesario
+    Optional<Parche> findByName(String nombre);
 }

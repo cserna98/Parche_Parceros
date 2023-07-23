@@ -31,5 +31,5 @@ public class Asistente {
 
     private Integer dias;
 
-    // Constructor, getters y setters
+
 }

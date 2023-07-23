@@ -21,13 +21,18 @@ public class ParcheService {
         return parcheRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Parche no encontrado"));
     }
 
+    public Parche getParcheByName(String nombre) {
+        return parcheRepository.findByName(nombre)
+                .orElseThrow(() -> new EntityNotFoundException("Parche no encontrado con el nombre: " + nombre));
+    }
+
     public Parche createParche(Parche parche) {
         return parcheRepository.save(parche);
     }
 
     public Parche updateParche(Long id, Parche parcheDetails) {
         Parche parche = getParcheById(id);
-        parche.setNombre(parcheDetails.getNombre());
+        parche.setName(parcheDetails.getName());
         parche.setFecha(parcheDetails.getFecha());
         parche.setDias(parcheDetails.getDias());
         parche.setGastoTotal(parcheDetails.getGastoTotal());

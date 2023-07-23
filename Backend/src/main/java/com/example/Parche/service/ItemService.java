@@ -20,6 +20,11 @@ public class ItemService {
     public Item getItemById(Long id) {
         return itemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item no encontrado"));
     }
+    public Item findByName(String nombre) {
+        return itemRepository.findByName(nombre)
+                .orElseThrow(() -> new EntityNotFoundException("Item no encontrado"));
+    }
+
 
     public Item createItem(Item item) {
         return itemRepository.save(item);
