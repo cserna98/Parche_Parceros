@@ -18,7 +18,7 @@ public class Asistente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String nombre;
 
     private Double gasto;
 

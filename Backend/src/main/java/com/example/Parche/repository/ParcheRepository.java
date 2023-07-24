@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ParcheRepository extends JpaRepository<Parche, Long> {
-    Optional<Parche> findByName(String nombre);
+    Optional<Parche> findByNombre(String nombre);
 }

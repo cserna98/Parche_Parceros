@@ -1,7 +1,9 @@
 package com.example.Parche.service;
 
+import com.example.Parche.entity.Item;
 import com.example.Parche.entity.Parche;
 import com.example.Parche.repository.ParcheRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 public class ParcheService {
     @Autowired
     private ParcheRepository parcheRepository;
+    private Parche parche;
+
 
     public List<Parche> getAllParches() {
         return parcheRepository.findAll();
@@ -22,7 +26,7 @@ public class ParcheService {
     }
 
     public Parche getParcheByName(String nombre) {
-        return parcheRepository.findByName(nombre)
+        return parcheRepository.findByNombre(nombre)
                 .orElseThrow(() -> new EntityNotFoundException("Parche no encontrado con el nombre: " + nombre));
     }
 
@@ -32,7 +36,7 @@ public class ParcheService {
 
     public Parche updateParche(Long id, Parche parcheDetails) {
         Parche parche = getParcheById(id);
-        parche.setName(parcheDetails.getName());
+        parche.setNombre(parcheDetails.getNombre());
         parche.setFecha(parcheDetails.getFecha());
         parche.setDias(parcheDetails.getDias());
         parche.setGastoTotal(parcheDetails.getGastoTotal());
@@ -42,4 +46,19 @@ public class ParcheService {
     public void deleteParche(Long id) {
         parcheRepository.deleteById(id);
     }
+
+        public void TotalCost() {
+        List<Parche> parches = parcheRepository.findAll();
+        for (Parche parche : parches) {
+            double gastoTotal = 0.0;
+            for (Item item : parche.getItems()) {
+                gastoTotal += item.getCosto();
+            }
+            parche.setGastoTotal(gastoTotal);
+            parcheRepository.save(parche);
+        }
+    }
+
+
 }
+

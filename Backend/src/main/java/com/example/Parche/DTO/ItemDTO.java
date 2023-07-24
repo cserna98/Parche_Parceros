@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDTO {
+    private Long id;
     private String name;
     private String descripcion;
     private Integer dia;

@@ -15,6 +15,7 @@ public class ParcheDTO {
     private String nombre;
     private String fecha;
     private Integer dias;
+    private Double GastoTotal;
     private List<String> nombresAsistentes;
     private List<String> nombresItems;
 

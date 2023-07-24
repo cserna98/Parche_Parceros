@@ -21,7 +21,7 @@ public class ItemService {
         return itemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item no encontrado"));
     }
     public Item findByName(String nombre) {
-        return itemRepository.findByName(nombre)
+        return itemRepository.findByNombre(nombre)
                 .orElseThrow(() -> new EntityNotFoundException("Item no encontrado"));
     }
 
@@ -32,7 +32,7 @@ public class ItemService {
 
     public Item updateItem(Long id, Item itemDetails) {
         Item item = getItemById(id);
-        item.setName(itemDetails.getName());
+        item.setNombre(itemDetails.getNombre());
         item.setDescripcion(itemDetails.getDescripcion());
         item.setDia(itemDetails.getDia());
         item.setImg(itemDetails.getImg());

@@ -23,11 +23,13 @@ public class ParcheController {
     private final AsistenteService asistenteService;
     private final ModelMapper modelMapper;
 
+
     public ParcheController(ParcheService parcheService, ItemService itemService, AsistenteService asistenteService, ModelMapper modelMapper) {
         this.parcheService = parcheService;
         this.itemService = itemService;
         this.asistenteService = asistenteService;
         this.modelMapper = modelMapper;
+
     }
 
     @GetMapping
@@ -103,4 +105,6 @@ public class ParcheController {
     public void deleteParche(@PathVariable Long id) {
         parcheService.deleteParche(id);
     }
+
+
 }

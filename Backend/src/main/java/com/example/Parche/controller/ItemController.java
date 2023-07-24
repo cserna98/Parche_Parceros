@@ -49,11 +49,18 @@ public class ItemController {
         item.setParche(parche);
         Asistente asistente = asistenteService.findByName(itemDTO.getNombreAsistente());
         item.setAsistente(asistente);
+        parcheService.TotalCost();
         return itemService.createItem(item);
     }
 
     @PutMapping("/{id}")
-    public Item updateItem(@PathVariable Long id, @RequestBody Item itemDetails) {
-        return itemService.updateItem(id, itemDetails);
+    public Item updateItem(@PathVariable Long id, @RequestBody ItemDTO itemDetails) {
+        Item item = modelMapper.map(itemDetails, Item.class);
+        Parche parche = parcheService.getParcheByName(itemDetails.getNombreParche());
+        item.setParche(parche);
+        Asistente asistente = asistenteService.findByName(itemDetails.getNombreAsistente());
+        item.setAsistente(asistente);
+        parcheService.TotalCost();
+        return itemService.updateItem(id, item);
     }
 }

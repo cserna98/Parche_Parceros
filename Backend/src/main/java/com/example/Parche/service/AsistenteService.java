@@ -21,7 +21,7 @@ public class AsistenteService {
         return asistenteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
     }
     public Asistente findByName(String nombre) {
-        return asistenteRepository.findByName(nombre).orElseThrow(() -> new EntityNotFoundException("Asistente no encontrado con nombre: " + nombre));
+        return asistenteRepository.findByNombre(nombre).orElseThrow(() -> new EntityNotFoundException("Asistente no encontrado con nombre: " + nombre));
     }
     public Asistente createAsistente(Asistente asistente) {
         return asistenteRepository.save(asistente);
@@ -29,7 +29,7 @@ public class AsistenteService {
 
     public Asistente updateAsistente(Long id, Asistente usuarioDetails) {
         Asistente usuario = getAsistenteById(id);
-        usuario.setName(usuarioDetails.getName());
+        usuario.setNombre(usuarioDetails.getNombre());
         usuario.setGasto(usuarioDetails.getGasto());
         usuario.setDebe(usuarioDetails.getDebe());
         usuario.setParche(usuarioDetails.getParche());

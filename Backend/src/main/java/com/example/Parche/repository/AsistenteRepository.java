@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface AsistenteRepository extends JpaRepository<Asistente, Long> {
-    Optional<Asistente> findByName(String nombre);
+    Optional<Asistente> findByNombre(String nombre);
 }
