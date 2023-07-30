@@ -17,4 +17,37 @@ public class AsistenteDTO {
     private Long idParche;
 
     // Constructor, getters, and setters (if needed)
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDias() {
+        return dias;
+    }
+
+    public void setDias(Integer dias) {
+        this.dias = dias;
+    }
+
+    public Long getIdParche() {
+        return idParche;
+    }
+
+    public void setIdParche(Long idParche) {
+        this.idParche = idParche;
+    }
 }
