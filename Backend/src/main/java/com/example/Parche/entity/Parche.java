@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -22,7 +23,7 @@ public class Parche {
 
     private String nombre;
 
-    private String fecha;
+    private Date fecha;
 
     private Integer dias;
 
@@ -52,11 +53,11 @@ public class Parche {
         this.nombre = nombre;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

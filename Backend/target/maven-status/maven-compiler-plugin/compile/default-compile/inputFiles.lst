@@ -1,0 +1,17 @@
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/DTO/ItemDTO.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/DTO/ParcheDTO.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/config/AppConfig.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/service/AsistenteService.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/entity/Item.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/repository/ParcheRepository.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/entity/Asistente.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/controller/AsistenteController.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/controller/ItemController.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/service/ParcheService.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/ParcheApplication.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/DTO/AsistenteDTO.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/service/ItemService.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/repository/ItemRepository.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/entity/Parche.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/controller/ParcheController.java
+/home/cris/Documentos/Repositorios/Parche_Parceros/Backend/src/main/java/com/example/Parche/repository/AsistenteRepository.java

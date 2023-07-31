@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ParcheDTO {
     private String nombre;
-    private String fecha;
+    private Date fecha;
     private Integer dias;
     private Double GastoTotal;
     private List<String> nombresAsistentes;
@@ -27,11 +28,11 @@ public class ParcheDTO {
         this.nombre = nombre;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
