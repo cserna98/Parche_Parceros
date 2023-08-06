@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text,Button } from "react-native";
 import {getParcheById} from '../api/ParcheApi'
 
 function ParchesInfo(props) {
@@ -31,6 +31,7 @@ function ParchesInfo(props) {
     return ( 
         <SafeAreaView>
             <Text>intentando</Text>
+            <Button title="+ Persona"/>
         </SafeAreaView>
      );
 }

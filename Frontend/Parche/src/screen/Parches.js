@@ -3,10 +3,18 @@ import  { useState, useEffect } from "react";
 import { SafeAreaView, Text,Button } from "react-native";
 import { ParchesApi } from '../api/ParcheApi';
 import  ParcheList  from '../components/ParcheList'
+import { useNavigation } from "@react-navigation/native";
 
 function Parches() {
 
     const [parches, setParches] = useState([]);
+
+    const navigation = useNavigation(); 
+
+    const goToAddParche=()=>{
+        navigation.navigate("addParche");
+        };
+
 
     const loadParche = async () => {
         console.log("SI ENTRO A LOAD")
@@ -41,7 +49,7 @@ function Parches() {
            <ParcheList
             parches={parches}
            />
-           <Button title="+ Parche"/>
+           <Button title="+ Parche" onPress={goToAddParche}/>
         </SafeAreaView>
 
     );
