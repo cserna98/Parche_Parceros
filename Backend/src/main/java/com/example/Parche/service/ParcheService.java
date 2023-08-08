@@ -37,7 +37,8 @@ public class ParcheService {
     public Parche updateParche(Long id, Parche parcheDetails) {
         Parche parche = getParcheById(id);
         parche.setNombre(parcheDetails.getNombre());
-        parche.setFecha(parcheDetails.getFecha());
+        parche.setFechaInicio(parcheDetails.getFechaInicio());
+        parche.setFechaFin(parcheDetails.getFechaFin());
         parche.setDias(parcheDetails.getDias());
         parche.setGastoTotal(parcheDetails.getGastoTotal());
         return parcheRepository.save(parche);

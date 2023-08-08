@@ -14,11 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ParcheDTO {
     private String nombre;
-    private Date fecha;
+    private Date fechaInicio;
+    private Date fechaFin;
     private Integer dias;
-    private Double GastoTotal;
-    private List<String> nombresAsistentes;
-    private List<String> nombresItems;
 
     public String getNombre() {
         return nombre;
@@ -28,12 +26,20 @@ public class ParcheDTO {
         this.nombre = nombre;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public Integer getDias() {
@@ -42,29 +48,5 @@ public class ParcheDTO {
 
     public void setDias(Integer dias) {
         this.dias = dias;
-    }
-
-    public Double getGastoTotal() {
-        return GastoTotal;
-    }
-
-    public void setGastoTotal(Double gastoTotal) {
-        GastoTotal = gastoTotal;
-    }
-
-    public List<String> getNombresAsistentes() {
-        return nombresAsistentes;
-    }
-
-    public void setNombresAsistentes(List<String> nombresAsistentes) {
-        this.nombresAsistentes = nombresAsistentes;
-    }
-
-    public List<String> getNombresItems() {
-        return nombresItems;
-    }
-
-    public void setNombresItems(List<String> nombresItems) {
-        this.nombresItems = nombresItems;
     }
 }

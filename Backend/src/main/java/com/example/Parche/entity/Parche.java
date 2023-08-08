@@ -23,7 +23,12 @@ public class Parche {
 
     private String nombre;
 
-    private Date fecha;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaInicio;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaFin;
+
 
     private Integer dias;
 
@@ -53,12 +58,20 @@ public class Parche {
         this.nombre = nombre;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public Integer getDias() {
