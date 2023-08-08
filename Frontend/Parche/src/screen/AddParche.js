@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import DatePicker from 'react-native-datepicker';
 import { useNavigation } from "@react-navigation/native";
+import CalendarPicker from 'react-native-calendar-picker';
+import DatePickerInput from '../components/DatePickerInput';
+import { postParche } from '../api/ParcheApi';
 
 const AddParche = (props) => {
   const [nombre, setNombre] = useState('');
   const [fecha, setFecha] = useState(new Date());
   const [dias, setDias] = useState('');
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [asistentes, setAsistentes] = useState([]); // Array de nombres de asistentes
 
 
@@ -16,15 +20,42 @@ const AddParche = (props) => {
     route: {params},
   } = props;
 
+  const handleStartDateChange = (date) => {
+    console.log("Selected Start Date:", date);
+    setSelectedStartDate(date);
+    updateDias(date, selectedEndDate);
+  };
+  
+  const handleEndDateChange = (date) => {
+    console.log("Selected end Date:", date);
+    setSelectedEndDate(date);
+    updateDias(selectedStartDate, date);
+  };
+  
+
+  const updateDias = (startDate, endDate) => {
+    if (startDate && endDate) {
+      const timeDiff = new Date(endDate).getTime() - new Date(startDate).getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      setDias(daysDiff.toString());
+    } else {
+      setDias('');
+    }
+    console.log(dias)
+  };
+
   const handleCrearParche = () => {
 
    
-    const parcheDTO = {
+    const parche = {
       nombre: nombre,
-      fecha: fecha.toISOString(),
+      fechaInicio: new Date(selectedStartDate),
+      fechaFin: new Date(selectedEndDate),
       dias: parseInt(dias),
       nombresAsistentes: asistentes, // Asignar el array de asistentes al parcheDTO
     };
+    console.log(parche)
+    postParche(parche)
 
     // Aquí puedes hacer el POST con el JSON de parcheDTO al backend...
   };
@@ -49,21 +80,7 @@ const AddParche = (props) => {
         onChangeText={text => setNombre(text)}
         style={styles.input}
       />
-      <DatePicker
-        date={fecha}
-        mode="date"
-        placeholder="Fecha"
-        format="YYYY-MM-DD"
-        confirmBtnText="Confirmar"
-        cancelBtnText="Cancelar"
-        customStyles={{
-          dateIcon: {
-            display: 'none',
-          },
-          dateInput: styles.dateInput,
-        }}
-        onDateChange={date => setFecha(date)}
-      />
+      <DatePickerInput onStartDateChange={handleStartDateChange} onEndDateChange={handleEndDateChange}/>
       <TextInput
         label="Días"
         value={dias}
@@ -80,6 +97,7 @@ const AddParche = (props) => {
           style={styles.input}
         />
       ))}
+      
       <Button mode="contained" onPress={handleAgregarAsistente} style={styles.button}>
         Añadir Asistente
       </Button>
