@@ -15,6 +15,7 @@ export default function parchecard(props){
     const navigation = useNavigation();
 
     const goToParche=()=>{
+        console.log("ir a parche")
         navigation.navigate("parchesInfo",  { id: parche.id } );
         };
 

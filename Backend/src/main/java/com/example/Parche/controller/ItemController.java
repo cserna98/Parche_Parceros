@@ -10,6 +10,7 @@ import com.example.Parche.service.ParcheService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,11 +42,28 @@ public class ItemController {
         return itemService.getItemById(id);
     }
 
+    @GetMapping("/{parcheId}/items")
+    public ResponseEntity<List<ItemDTO>> getItemsByParcheId(@PathVariable Long parcheId) {
+        List<ItemDTO> items = itemService.getItemsByParcheId(parcheId);
+        return ResponseEntity.ok(items);
+    }
+
+    @DeleteMapping("/{itemId}")
+    public ResponseEntity<String> deleteItem(@PathVariable Long itemId) {
+        try {
+            itemService.deleteItem(itemId);
+            return ResponseEntity.ok("Item eliminado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al eliminar el item");
+        }
+    }
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Item createItem(@RequestBody ItemDTO itemDTO) {
         Item item = modelMapper.map(itemDTO, Item.class);
-        Parche parche = parcheService.getParcheByName(itemDTO.getNombreParche());
+        Parche parche = parcheService.getParcheById(itemDTO.getIdParche());
         item.setParche(parche);
         Asistente asistente = asistenteService.findByName(itemDTO.getNombreAsistente());
         item.setAsistente(asistente);
@@ -56,7 +74,7 @@ public class ItemController {
     @PutMapping("/{id}")
     public Item updateItem(@PathVariable Long id, @RequestBody ItemDTO itemDetails) {
         Item item = modelMapper.map(itemDetails, Item.class);
-        Parche parche = parcheService.getParcheByName(itemDetails.getNombreParche());
+        Parche parche = parcheService.getParcheById(itemDetails.getIdParche());
         item.setParche(parche);
         Asistente asistente = asistenteService.findByName(itemDetails.getNombreAsistente());
         item.setAsistente(asistente);

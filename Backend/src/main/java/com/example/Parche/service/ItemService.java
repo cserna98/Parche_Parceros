@@ -1,17 +1,23 @@
 package com.example.Parche.service;
 
+import com.example.Parche.DTO.ItemDTO;
 import com.example.Parche.entity.Item;
 import com.example.Parche.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
@@ -23,6 +29,17 @@ public class ItemService {
     public Item findByName(String nombre) {
         return itemRepository.findByNombre(nombre)
                 .orElseThrow(() -> new EntityNotFoundException("Item no encontrado"));
+    }
+
+    public List<ItemDTO> getItemsByParcheId(Long parcheId) {
+        List<Item> items = itemRepository.findByParcheId(parcheId);
+
+        // Convertir objetos Item a objetos ItemDTO usando ModelMapper
+        List<ItemDTO> itemsDTO = items.stream()
+                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .collect(Collectors.toList());
+
+        return itemsDTO;
     }
 
 

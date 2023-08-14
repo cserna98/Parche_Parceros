@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import CalendarPicker from 'react-native-calendar-picker';
 import DatePickerInput from '../components/DatePickerInput';
 import { postParche } from '../api/ParcheApi';
+import StatusBarMargin from '../components/StatusBarMargin';
 
 const AddParche = (props) => {
   const [nombre, setNombre] = useState('');
@@ -35,7 +36,7 @@ const AddParche = (props) => {
 
   const updateDias = (startDate, endDate) => {
     if (startDate && endDate) {
-      const timeDiff = new Date(endDate).getTime() - new Date(startDate).getTime();
+      const timeDiff = new Date(endDate).getTime() - new Date(startDate).getTime() + 1;
       const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
       setDias(daysDiff.toString());
     } else {
@@ -73,7 +74,8 @@ const AddParche = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <StatusBarMargin>
+      <View style={styles.container}>
       <TextInput
         label="Nombre"
         value={nombre}
@@ -105,6 +107,7 @@ const AddParche = (props) => {
         Crear Parche
       </Button>
     </View>
+    </StatusBarMargin>
   );
 };
 

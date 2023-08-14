@@ -11,12 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ItemDTO {
     private Long id;
-    private String name;
+    private String nombre;
     private String descripcion;
     private Integer dia;
     private String img;
     private Double costo;
-    private String nombreParche;
+    private Long idParche;
     private String nombreAsistente;
 
     public Long getId() {
@@ -27,12 +27,12 @@ public class ItemDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNaombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -67,12 +67,12 @@ public class ItemDTO {
         this.costo = costo;
     }
 
-    public String getNombreParche() {
-        return nombreParche;
+    public Long getIdParche() {
+        return idParche;
     }
 
-    public void setNombreParche(String nombreParche) {
-        this.nombreParche = nombreParche;
+    public void setIdParche(Long idParche) {
+        this.idParche = idParche;
     }
 
     public String getNombreAsistente() {
@@ -83,5 +83,5 @@ public class ItemDTO {
         this.nombreAsistente = nombreAsistente;
     }
 
-    // Constructor, getters y setters
+// Constructor, getters y setters
 }

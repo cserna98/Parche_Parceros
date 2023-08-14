@@ -12,7 +12,7 @@ import lombok.Setter;
 public class AsistenteDTO {
 
     private Long id;
-    private String name;
+    private String nombre;
     private Integer dias;
     private Long idParche;
 
@@ -28,11 +28,11 @@ public class AsistenteDTO {
     }
 
     public String getName() {
-        return name;
+        return nombre;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.nombre= name;
     }
 
     public Integer getDias() {
