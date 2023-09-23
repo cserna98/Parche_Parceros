@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -22,7 +26,10 @@ public class Item {
 
     private String descripcion;
 
-    private Integer dia;
+
+    private Integer dias;
+
+    private Date dia;
 
     private String img;
 
@@ -35,6 +42,15 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "asistente_id",referencedColumnName = "id")
     private Asistente asistente;
+
+    @ManyToMany
+    @JoinTable(
+            name = "item_no_consume",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "asistente_id")
+    )
+    private Set<Asistente> NoConsume = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -60,12 +76,20 @@ public class Item {
         this.descripcion = descripcion;
     }
 
-    public Integer getDia() {
+    public Integer getDias() {
+        return dias;
+    }
+
+    public Date getDia() {
         return dia;
     }
 
-    public void setDia(Integer dia) {
+    public void setDia(Date dia) {
         this.dia = dia;
+    }
+
+    public void setDias(Integer dias) {
+        this.dias = dias;
     }
 
     public String getImg() {
@@ -98,5 +122,13 @@ public class Item {
 
     public void setAsistente(Asistente asistente) {
         this.asistente = asistente;
+    }
+
+    public Set<Asistente> getNoConsume() {
+        return NoConsume;
+    }
+
+    public void setNoConsume(Set<Asistente> noConsume) {
+        NoConsume = noConsume;
     }
 }

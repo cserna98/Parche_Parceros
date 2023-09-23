@@ -61,24 +61,31 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Item createItem(@RequestBody ItemDTO itemDTO) {
-        Item item = modelMapper.map(itemDTO, Item.class);
-        Parche parche = parcheService.getParcheById(itemDTO.getIdParche());
-        item.setParche(parche);
-        Asistente asistente = asistenteService.findByName(itemDTO.getNombreAsistente());
-        item.setAsistente(asistente);
-        parcheService.TotalCost();
-        return itemService.createItem(item);
+    public ResponseEntity<String> createItem(@RequestBody ItemDTO itemDTO) {
+        try {
+            System.out.println("entro a ty item");
+            Item item = modelMapper.map(itemDTO, Item.class);
+            Parche parche = parcheService.getParcheById(itemDTO.getIdParche());
+            item.setParche(parche);
+            Asistente asistente = asistenteService.findByName(itemDTO.getNombreAsistente());
+            item.setAsistente(asistente);
+            parcheService.TotalCost();
+
+            // Guardar el item y obtener la respuesta
+            Item newItem = itemService.createItem(item);
+            System.out.println("item"  + newItem);
+            // Return 201 Created con un mensaje de éxito
+            return ResponseEntity.status(HttpStatus.CREATED).body("Item creado exitosamente con ID: " + newItem.getId());
+        } catch (Exception e) {
+            // Si ocurre una excepción, regresa una respuesta con un mensaje de error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el item: " + e.getMessage());
+        }
     }
 
+
     @PutMapping("/{id}")
-    public Item updateItem(@PathVariable Long id, @RequestBody ItemDTO itemDetails) {
-        Item item = modelMapper.map(itemDetails, Item.class);
-        Parche parche = parcheService.getParcheById(itemDetails.getIdParche());
-        item.setParche(parche);
-        Asistente asistente = asistenteService.findByName(itemDetails.getNombreAsistente());
-        item.setAsistente(asistente);
-        parcheService.TotalCost();
-        return itemService.updateItem(id, item);
+    public Item updateItem(@PathVariable Long id, @RequestBody Item item) {
+      Item updateItem = itemService.updateItem(id,item);
+        return updateItem;
     }
 }

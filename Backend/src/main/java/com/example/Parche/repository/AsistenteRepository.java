@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface AsistenteRepository extends JpaRepository<Asistente, Long> {
-    @Query("SELECT a FROM Asistente a WHERE a.firstname = :nombre")
+    @Query("SELECT a FROM Asistente a WHERE a.nombre = :nombre")
     List<Asistente> findByNombre(@Param("nombre") String nombre);
     List<Asistente> findByParcheId(Long parcheId);
 }

@@ -2,7 +2,9 @@ package com.example.Parche.service;
 
 import com.example.Parche.entity.Item;
 import com.example.Parche.entity.Parche;
+import com.example.Parche.entity.usuario.Usuario;
 import com.example.Parche.repository.ParcheRepository;
+import com.example.Parche.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import java.util.List;
 public class ParcheService {
     @Autowired
     private ParcheRepository parcheRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
     private Parche parche;
 
 
@@ -29,6 +34,7 @@ public class ParcheService {
         return parcheRepository.findByNombre(nombre)
                 .orElseThrow(() -> new EntityNotFoundException("Parche no encontrado con el nombre: " + nombre));
     }
+
 
 
 

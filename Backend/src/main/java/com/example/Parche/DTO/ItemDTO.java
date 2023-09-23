@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -18,6 +21,8 @@ public class ItemDTO {
     private Double costo;
     private Long idParche;
     private String nombreAsistente;
+
+    private Set<String> NombreAsistentesNoConsume = new HashSet<>();
 
     public Long getId() {
         return id;

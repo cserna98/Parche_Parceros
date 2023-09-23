@@ -1,5 +1,6 @@
 package com.example.Parche.entity;
 
+import com.example.Parche.entity.usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Setter
 @Getter
@@ -34,13 +34,23 @@ public class Parche {
 
     private Double GastoTotal;
 
-    @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Asistente> Asistente;
 
     @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Item> items;
+    private Set<Asistente> asistentes = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_parche",
+            joinColumns = @JoinColumn(name = "parche_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private Set<Usuario> usuarios;
+
+    @OneToMany(mappedBy = "parche", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Item> items;
+
 
     public Long getId() {
         return id;
@@ -90,19 +100,19 @@ public class Parche {
         GastoTotal = gastoTotal;
     }
 
-    public List<com.example.Parche.entity.Asistente> getAsistente() {
-        return Asistente;
+    public Set<Asistente> getAsistentes() {
+        return asistentes;
     }
 
-    public void setAsistente(List<com.example.Parche.entity.Asistente> asistente) {
-        Asistente = asistente;
+    public void setAsistentes(Set<Asistente> asistentes) {
+        this.asistentes = asistentes;
     }
 
-    public List<Item> getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(Set<Item> items) {
         this.items = items;
     }
 }

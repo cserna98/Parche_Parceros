@@ -5,6 +5,7 @@ import com.example.Parche.entity.Asistente;
 import com.example.Parche.entity.Parche;
 import com.example.Parche.entity.usuario.Usuario;
 import com.example.Parche.repository.AsistenteRepository;
+import com.example.Parche.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,34 +58,64 @@ public class AsistenteService {
     }
 
 
-    public Asistente createAsistente(Asistente asistente, Long idParche) {
-            // Obtener el parche existente por su ID
-            Parche parche = parcheService.getParcheById(idParche);
+    public Asistente createAsistente(AsistenteDTO asistenteDTO, Long idParche) {
+        System.out.println("Iniciando creación de asistente...");
 
-            // Verificar si el usuario con el mismo correo electrónico ya existe
-            Optional<Usuario> usuarioExistente = usuarioservice.getUserByEmail(asistente.getEmail());
 
-            if (usuarioExistente.isPresent()) {
-                // Si el usuario ya existe, puedes asignarlo como asistente al parche
-                Asistente asistenteExistente = (Asistente) usuarioExistente.get();
-                asistenteExistente.setParche(parche);
+            // Verificar si el usuario existe
+            Optional<Usuario> usuarioExistenteOptional = usuarioservice.getUserByEmail(asistenteDTO.getEmail());
 
-                // Puedes realizar otras operaciones relacionadas con el asistente existente si es necesario
+            if (usuarioExistenteOptional.isPresent()) {
+                System.out.println("Usuario existe " + usuarioExistenteOptional);
+                // Si el usuario ya existe, asignar ese usuario al asistente en lugar de crear uno nuevo
+                Usuario usuarioExistente = usuarioExistenteOptional.get();
+                System.out.println("Usuario existe " + usuarioExistente);
 
-                // Guardar el asistente existente actualizado en la base de datos
-                asistenteRepository.save(asistenteExistente);
+                // Convertir AsistenteDTO a Asistente utilizando ModelMapper
+                Asistente nuevoAsistente = modelMapper.map(asistenteDTO, Asistente.class);
 
-                return asistenteExistente;
+                System.out.println("Nuevo asistente: " + nuevoAsistente);
+
+                // Obtener el parche por ID y asignarlo al asistente
+                Parche parche = parcheService.getParcheById(idParche);
+                System.out.println("Parche existente: " + idParche);
+                System.out.println(parche);
+                nuevoAsistente.setParche(parche);
+                nuevoAsistente.setUser(true);
+
+                // Agregar el parche a la lista de parches del usuario
+                usuarioExistente.getParches().add(parche);
+
+                // Asignar el usuario al asistente
+                nuevoAsistente.setUsuario(usuarioExistente);
+                nuevoAsistente.setNombre(usuarioExistente.getFirstname() + " " +  usuarioExistente.getLastname());
+                System.out.println("new asistente: " + nuevoAsistente);
+                // Guardar el nuevo asistente y actualizar el usuario
+                asistenteRepository.save(nuevoAsistente);
+                usuarioservice.actualizarUsuario(usuarioExistente.getId(), usuarioExistente);
+                System.out.println("Asistente guardado: " + nuevoAsistente);
+
+                return nuevoAsistente;
             } else {
-                // Si el usuario no existe, primero asigna el parche al asistente
-                throw new EntityNotFoundException("Asistente no encontrado con nombre: " + nombre);
-
-                // Puedes realizar otras operaciones relacionadas con el asistente si es necesario
-
-                // Guardar el nuevo asistente en la base de datos
-                return asistenteRepository.save(asistente);
+                // Si el usuario no existe, puedes manejarlo según tus necesidades
+                Asistente nuevoAsistente = modelMapper.map(asistenteDTO, Asistente.class);
+                Parche parche = parcheService.getParcheById(idParche);
+                nuevoAsistente.setParche(parche);
+                nuevoAsistente.setUser(false);
+                asistenteRepository.save(nuevoAsistente);
+                throw new EntityNotFoundException("Usuario no encontrado con el correo: " + asistenteDTO.getEmail());
             }
+
+
     }
+
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,9 @@
 package com.example.Parche.repository;
 
-import com.ovniric.model.user.Role;
+
+import com.example.Parche.entity.usuario.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 
 import java.util.Optional;
 

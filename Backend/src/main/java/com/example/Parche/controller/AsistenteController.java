@@ -4,6 +4,7 @@ import com.example.Parche.DTO.AsistenteDTO;
 import com.example.Parche.entity.Asistente;
 import com.example.Parche.service.AsistenteService;
 import com.example.Parche.service.ParcheService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +45,21 @@ public class AsistenteController {
         return ResponseEntity.ok(asistentes);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Asistente createAsistente(@RequestBody AsistenteDTO asistenteDTO) {
-        Asistente asistente = modelMapper.map(asistenteDTO, Asistente.class);
-        return asistenteService.createAsistente(asistente);
+    @PostMapping("/{idParche}/parche")
+    public ResponseEntity<String> crearAsistente(
+            @PathVariable Long idParche,
+            @RequestBody AsistenteDTO asistenteDTO
+    ) {
+        try {
+            Asistente asistenteCreado = asistenteService.createAsistente(asistenteDTO, idParche);
+            return ResponseEntity.ok("Asistente creado exitosamente.");
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el asistente.");
+        }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Asistente> updateAsistente(@PathVariable Long id, @RequestBody Asistente asistenteDetails) {

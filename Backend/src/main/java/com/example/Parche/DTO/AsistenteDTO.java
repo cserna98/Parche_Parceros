@@ -11,28 +11,40 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AsistenteDTO {
 
-    private Long id;
     private String nombre;
+    private String email;     // Campo heredado de Usuario
+    private Double gasto;
+    private Double debe;
     private Integer dias;
-    private Long idParche;
 
     // Constructor, getters, and setters (if needed)
 
 
-    public Long getId() {
-        return id;
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getName() {
-        return nombre;
+
+
+    public Double getGasto() {
+        return gasto;
     }
 
-    public void setName(String name) {
-        this.nombre= name;
+    public void setGasto(Double gasto) {
+        this.gasto = gasto;
+    }
+
+    public Double getDebe() {
+        return debe;
+    }
+
+    public void setDebe(Double debe) {
+        this.debe = debe;
     }
 
     public Integer getDias() {
@@ -43,11 +55,11 @@ public class AsistenteDTO {
         this.dias = dias;
     }
 
-    public Long getIdParche() {
-        return idParche;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setIdParche(Long idParche) {
-        this.idParche = idParche;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

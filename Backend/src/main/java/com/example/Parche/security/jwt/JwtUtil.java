@@ -16,7 +16,7 @@ public class JwtUtil {
     public String create(String username) {
         return JWT.create()
                 .withSubject(username)
-                .withIssuer("platzi-pizza")
+                .withIssuer("parche")
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(15)))
                 .sign(ALGORITHM);
@@ -34,6 +34,7 @@ public class JwtUtil {
     }
 
     public String getUsername(String jwt) {
+        System.out.println(jwt);
         return JWT.require(ALGORITHM)
                 .build()
                 .verify(jwt)
