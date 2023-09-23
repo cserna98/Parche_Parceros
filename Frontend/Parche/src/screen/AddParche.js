@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { Text ,TextInput, Button } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
 import CalendarPicker from 'react-native-calendar-picker';
 import DatePickerInput from '../components/DatePickerInput';
 import { postParche } from '../api/ParcheApi';
 import StatusBarMargin from '../components/StatusBarMargin';
+import { useAuth } from '../Context/AuthContext';
+
 
 const AddParche = (props) => {
   const [nombre, setNombre] = useState('');
@@ -14,12 +16,17 @@ const AddParche = (props) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [asistentes, setAsistentes] = useState([]); // Array de nombres de asistentes
+  const [parcheCreado, setParcheCreado] = useState(false);
+  const { token, setAuthToken } = useAuth();
+
 
 
   const {
     navigation,
     route: {params},
   } = props;
+
+  const navigate = useNavigation();
 
   const handleStartDateChange = (date) => {
     console.log("Selected Start Date:", date);
@@ -32,6 +39,8 @@ const AddParche = (props) => {
     setSelectedEndDate(date);
     updateDias(selectedStartDate, date);
   };
+
+ 
   
 
   const updateDias = (startDate, endDate) => {
@@ -56,7 +65,17 @@ const AddParche = (props) => {
       nombresAsistentes: asistentes, // Asignar el array de asistentes al parcheDTO
     };
     console.log(parche)
-    postParche(parche)
+    postParche(parche,token)
+      .then(() => {
+        setParcheCreado(true);
+        setTimeout(() => {
+          setParcheCreado(false);
+          navigate.navigate('Parches'); // Navega a ParchesInfo
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error('Error al crear el parche', error);
+      });
 
     // Aquí puedes hacer el POST con el JSON de parcheDTO al backend...
   };
@@ -106,7 +125,12 @@ const AddParche = (props) => {
       <Button mode="contained" onPress={handleCrearParche} style={styles.button}>
         Crear Parche
       </Button>
-    </View>
+      {parcheCreado && (
+          <View style={styles.messageContainer}>
+            <Text style={styles.message}>Parche creado con éxito</Text>
+          </View>
+        )}
+      </View>
     </StatusBarMargin>
   );
 };
@@ -126,6 +150,24 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
+  },
+  messageContainer: {
+    position: 'absolute',
+    top: '33%', // Aproximadamente un tercio del alto de la pantalla
+    left: '10%', // 80% del ancho de la pantalla
+    right: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 20,
+    borderRadius: 10,
+    zIndex: 1000,
+  },
+  message: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

@@ -22,7 +22,6 @@ export default function ItemCard(props) {
 
     const deleteItem = async () => {
         try {
-            console.log("soy id"+id)
             await deleteItemAPI(id)
             props.onDeleteItem();
             // Aquí puedes realizar alguna acción adicional después de eliminar el item

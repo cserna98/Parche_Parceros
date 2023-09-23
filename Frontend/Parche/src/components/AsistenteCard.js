@@ -32,7 +32,7 @@ export default function AsistenteCard(props) {
 };
 
   useEffect(() => {
-    console.log("Asistente" + asistente);
+    console.log(asistente);
   }, [props]);
 
   return (

@@ -1,16 +1,18 @@
 import { API_HOST } from "../utils/Constants";
 
-export async function getAsistentesByParcheId(parcheId) {
+export async function getAsistentesByParcheId(parcheId, token) {
   try {
     const url = `${API_HOST}/asistentes/${parcheId}/asistentes`;
-    console.log(url)
-    const response = await fetch(url);
-    console.log("response " + response)
+    const response = await fetch(url,{
+      headers: {
+        'Authorization': `Bearer ${token}`, // Agrega el token de autorización en el encabezado
+        'Content-Type': 'application/json'
+    }
+    });
     const result = await response.json();
-    console.log(result)
     return result;
   } catch (error) {
-    console.log("error")
+    console.log("error" + error )
     throw error;
   }
 }
@@ -39,17 +41,20 @@ export async function deleteAsistenteAPI(id) {
 }
 
 
-export async function postAsistente(asistente) {
+export async function postAsistente(asistente, idParche,token) {
   try {
-    const url = `${API_HOST}/asistentes`;
+    console.log("ingrese a try ")
+    const url = `${API_HOST}/asistentes/${idParche}/parche`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(asistente),
     });
-
+    console.log(response)
+    return response
     if (response.ok) {
       const responseData = await response.json();
       console.log('Asistente creado:', responseData);

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Button} from 'react-native-paper';
+import { Text,TextInput, Button} from 'react-native-paper';
 import { Picker } from "@react-native-picker/picker";
 import { postItem } from '../api/ItemApi'; // Importa la función de la API para el POST de items
 import StatusBarMargin from '../components/StatusBarMargin';
+import { useAuth } from '../Context/AuthContext';
 
 const AddItem = (props) => {
   const [nombre, setNombre] = useState('');
@@ -12,13 +13,19 @@ const AddItem = (props) => {
   const [img, setImg] = useState('');
   const [costo, setCosto] = useState('');
   const [nombreAsistente, setNombreAsistente] = useState('');
+  const [itemCreado, setItemCreado] = useState(false);
+  const [listaAsistentes, setListaAsistentes] = useState([])
+  const { token, setAuthToken } = useAuth();
+
 
   const {
     navigation,
     route: {params},
   } = props;
 
-  const listaAsistentes = params.asistentes;
+  useEffect(()=>{
+    setListaAsistentes(params.asistentes)
+  },[])
 
   const handleCrearItem = () => {
 
@@ -32,7 +39,17 @@ const AddItem = (props) => {
       nombreAsistente: nombreAsistente,
     };
     console.log(item)
-    postItem(item); // Realiza el POST del item utilizando la función de la API
+    postItem(item,token)
+      .then(() => {
+        setItemCreado(true);
+        setTimeout(() => {
+          setItemCreado(false);
+          navigation.goBack();
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error('Error al crear el ítem', error);
+      }); 
   };
 
   return (
@@ -77,7 +94,7 @@ const AddItem = (props) => {
         onValueChange={value => setNombreAsistente(value)}
       >
         <Picker.Item label="Selecciona un asistente" value="asistente" />
-        {listaAsistentes.map(asistente => (
+        {listaAsistentes?.map(asistente => (
           <Picker.Item key={asistente.id} label={asistente.nombre} value={asistente.nombre} />
         ))}
       </Picker>
@@ -86,6 +103,11 @@ const AddItem = (props) => {
       <Button mode="contained" onPress={handleCrearItem} style={styles.button}>
         Crear Item
       </Button>
+      {itemCreado && (
+          <View style={styles.messageContainer}>
+            <Text style={styles.message}>Ítem creado con éxito</Text>
+          </View>
+        )}
     </View>
     </StatusBarMargin>
   );
@@ -102,6 +124,24 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
+  },
+  messageContainer: {
+    position: 'absolute',
+    top: '33%', // Aproximadamente un tercio del alto de la pantalla
+    left: '10%', // 80% del ancho de la pantalla
+    right: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 20,
+    borderRadius: 10,
+    zIndex: 1000,
+  },
+  message: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

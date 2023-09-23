@@ -54,7 +54,7 @@ export async function getItemsByParcheId(parcheId) {
 }
 
 
-export async function postItem(item) {
+export async function postItem(item, token) {
 
   try {
     const url = `${API_HOST}/items`;
@@ -62,6 +62,7 @@ export async function postItem(item) {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(item),

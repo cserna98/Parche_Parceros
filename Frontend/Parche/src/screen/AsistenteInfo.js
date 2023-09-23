@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { capitalize } from "lodash";
 import StatusBarMargin from "../components/StatusBarMargin";
+import AttributeRow from "../components/AttributeRow";
 
 
 export default function AsistenteInfo({ route }) {
@@ -9,16 +10,12 @@ export default function AsistenteInfo({ route }) {
 
   return (
     <StatusBarMargin>
-        <View style={styles.container}>
-        <View style={styles.row}>
-            <Text style={styles.attribute}>Nombre:</Text>
-            <Text style={styles.value}>{capitalize(asistente.nombre)}</Text>
-        </View>
-        <View style={styles.row}>
-            <Text style={styles.attribute}>Días:</Text>
-            <Text style={styles.value}>{asistente.dias}</Text>
-        </View>
-      {/* Agrega más filas aquí para otros atributos */}
+   <View style={[styles.containerAtributerow, { flex: 3 }]}>
+          {/* Renderiza las filas de atributos */}
+          {AttributeRow('Nombre', asistente?.nombre)}
+          {AttributeRow('Fecha Inicio',)}
+          {AttributeRow('Fecha Fin', ``)}
+          {AttributeRow('Costo', "")}
     </View>
     </StatusBarMargin>
   );

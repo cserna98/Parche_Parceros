@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   StyleSheet,
   View,
@@ -7,9 +7,13 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { capitalize } from "lodash";
+import moment from 'moment';
+import 'moment/locale/es'; // Importa la localización en español
 import { useNavigation } from "@react-navigation/native";
 
 export default function parchecard(props){
+
+    moment.locale('es');
 
     const {parche} = props;
     const navigation = useNavigation();
@@ -19,6 +23,11 @@ export default function parchecard(props){
         navigation.navigate("parchesInfo",  { id: parche.id } );
         };
 
+            useEffect(()=>{
+                console.log(parche)
+            },[])
+    
+
     return ( 
         <TouchableWithoutFeedback onPress={goToParche}>
              <View style={styles.card}>
@@ -26,7 +35,10 @@ export default function parchecard(props){
                     <View style={styles.bgStyles}>
                         <Text style={styles.number}>#{parche.id}</Text>
                         <Text style={styles.name}>{capitalize(parche.nombre)}</Text>
-                        <Text style={styles.date}>#{parche.fecha}</Text>
+                        <Text style={styles.dateText}>
+                            {moment(parche.fechaInicio).format('ddd D MMM').toLowerCase()} -{' '}
+                            {moment(parche.fechaFin).format('ddd D MMM').toLowerCase()}
+                        </Text>
                     </View>
                 </View>
                 
@@ -60,13 +72,12 @@ const styles=StyleSheet.create({
         color:"#fff",
         fontSize:11,
     },
-    name:{
-        color:"#fff",
-        fontWeight:"bold",
-        fontSize:15,
-        top: 0,
-        left:5,
-    },
+    name: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 25, // Aumenta el tamaño del texto
+        marginTop: 10, // Espacio superior
+      },
     image:{
         position:"absolute",
         bottom:2,
